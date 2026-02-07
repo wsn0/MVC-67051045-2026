@@ -33,6 +33,8 @@ public class DataManager {
         for (int i = 1; i <= 5; i++) {
             addReport(new Report("U100000" + i, "11112222","2026-02-0" + i, "Fake News"));
         }
+
+        addReport(new Report("U1000123", "66667777", "2025-07-12", "Fact Checked"));
     }
 
     private Rumour searchRumour(String id) {
@@ -43,7 +45,7 @@ public class DataManager {
         return null;
     }
 
-    private int reportCount(String id) {
+    public int reportCount(String id) {
         int count = 0;
 
         for (Report rep : reports) {
@@ -53,6 +55,19 @@ public class DataManager {
         }
 
         return count;
+    }
+
+    public void verifyRumour(String id, Users u) {
+        if (u.isChecker() == false) {
+            return;
+        }
+
+        for (Rumour r : rumours) {
+            if (r.getId().equals(id)) {
+                r.setVerify(true);
+                break;
+            }
+        }
     }
 
     public void addUser(Users u) {
@@ -65,23 +80,26 @@ public class DataManager {
         users.add(u);
     }
 
-    public void addReport(Report r) {
+    public boolean addReport(Report r) {
         Rumour rm = searchRumour(r.getRumId());
+        boolean flag = false;
 
         if (rm == null || rm.isVerify()) {
-            return;
+            return flag;
         }
 
         // เช็ค reporter id ว่า reporter คนนี้เคยรายงานไปหรือยัง
         for (Report rep : reports) {
             if (rep.getRepId().equals(r.getRepId()) && rep.getRumId().equals(r.getRumId())) {
-                return;
+                return flag;
             }
         }
 
         reports.add(r);
-
         rm.updateStatus(reportCount(rm.getId()));
+        flag = true;
+
+        return flag;
     }
 
     public void createRumour(Rumour r) {

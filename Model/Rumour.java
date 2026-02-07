@@ -2,7 +2,7 @@ package Model;
 
 public class Rumour {
     private String id;
-    private String titile;
+    private String title;
     private String src;
     private String date; // format: yyyy-mm-dd
     private int credit = 0;
@@ -16,39 +16,25 @@ public class Rumour {
 
     public Rumour() {}
 
-    public Rumour(String id, String titile, String src, String date, int credit) {
+    public Rumour(String id, String title, String src, String date, int credit) {
         setId(id);
-        this.titile = titile;
+        this.title = title;
         this.src = src;
         this.date = date;
         setCredit(credit);
     }
 
-    public Rumour(String id, String titile, String src, String date, int credit, String status) {
+    public Rumour(String id, String title, String src, String date, int credit, String status) {
         setId(id);
-        this.titile = titile;
+        this.title = title;
         this.src = src;
         this.date = date;
         setCredit(credit);
         this.status = status;
     }
 
-    // Logics
-    protected void verifyRumour(String id) {
-        if (u.isChecker() == false) {
-            return;
-        }
-
-        for (Rumour r : db.rumours) {
-            if (r.getId().equals(id)) {
-                r.setVerify(true);
-                break;
-            }
-        }
-    }
-
     protected void updateStatus(int num) {
-        if ((!isVerify()) && num == maxRumour) {
+        if ((!isVerify()) && num >= maxRumour) {
             this.status = "panic";
         }
     }
@@ -70,12 +56,12 @@ public class Rumour {
         if (credit >= 0) { this.credit = credit; }
     }
 
-    public String getTitile() {
-        return titile;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTitile(String titile) {
-        this.titile = titile;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getSrc() {
@@ -100,6 +86,10 @@ public class Rumour {
 
     public void setVerify(boolean v) {
         this.isVerify = v;
+    }
+
+    public String getStatus() {
+        return status;
     }
     
 }
