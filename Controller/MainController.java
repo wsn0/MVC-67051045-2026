@@ -36,7 +36,7 @@ public class MainController {
     }
 
     public void detailView(Rumour rm) {
-        RumourDetailView de = new RumourDetailView(this, db, db.rumours.get(0));
+        RumourDetailView de = new RumourDetailView(this, db, rm);
 
         frame.setContentPane(de);
         frame.revalidate();

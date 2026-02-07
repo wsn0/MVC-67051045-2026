@@ -79,8 +79,19 @@ public class RumourListView extends JPanel {
                 frame.listView();
             }
         });
+
+        JButton btnSummary = new JButton("View Summary");
+        btnSummary.setBackground(Color.CYAN);
+        btnSummary.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.summaryView();
+            }
+        });
+
         bottomPanel.add(btnSortbyCd);
         bottomPanel.add(btnSortByRep);
+        bottomPanel.add(btnSummary);
 
         add(bottomPanel, BorderLayout.SOUTH);
     }
